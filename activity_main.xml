@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="271dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:max="100"
+        android:maxHeight="30dip"
+        android:minHeight="30dip"
+        android:progress="100"
+        android:scaleY="2.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeLeftTextView"
+        app:layout_constraintVertical_bias="0.089" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="SPF: "
+        app:layout_constraintBottom_toBottomOf="@+id/spfTextView"
+        app:layout_constraintEnd_toStartOf="@+id/spfTextView"
+        app:layout_constraintTop_toTopOf="@+id/spfTextView" />
+
+    <EditText
+        android:id="@+id/spfTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="36dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="Skin Type: "
+        app:layout_constraintBottom_toBottomOf="@+id/skinTextView"
+        app:layout_constraintEnd_toStartOf="@+id/skinTextView"
+        app:layout_constraintTop_toTopOf="@+id/skinTextView" />
+
+    <EditText
+        android:id="@+id/skinTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spfTextView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="UV Index: "
+        app:layout_constraintBottom_toBottomOf="@+id/uvTextView"
+        app:layout_constraintEnd_toStartOf="@+id/uvTextView"
+        app:layout_constraintTop_toTopOf="@+id/uvTextView" />
+
+    <EditText
+        android:id="@+id/uvTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skinTextView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="Altitude: "
+        app:layout_constraintBottom_toBottomOf="@+id/altitudeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/altitudeTextView"
+        app:layout_constraintTop_toTopOf="@+id/altitudeTextView" />
+
+
+    <EditText
+        android:id="@+id/altitudeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uvTextView" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:text="Apply Suncsreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSub"
+        android:layout_width="44dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="1dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="44dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginBottom="1dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/timeLeftTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Estimated Time Left: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
