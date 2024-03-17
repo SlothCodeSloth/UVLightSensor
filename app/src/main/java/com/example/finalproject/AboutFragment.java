@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +36,8 @@ public class AboutFragment extends Fragment {
 
     String name;
     int skinType;
-    TextView editName;
-    TextView editSkin;
+    EditText editName;
+    EditText editSkin;
     Button saveButton;
     SharedPreferences userInfo;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -84,6 +86,7 @@ public class AboutFragment extends Fragment {
         editName = view.findViewById(R.id.editName);
         editSkin = view.findViewById(R.id.editSkin);
         saveButton = view.findViewById(R.id.saveButton);
+
         if (restorePrefData()) {
             name = userInfo.getString("name", "");
             skinType = userInfo.getInt("skinType", 0);
@@ -93,7 +96,7 @@ public class AboutFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editName.getText().equals("") || editSkin.getText().equals("") || editSkin.getText().equals("0")) {
+                if (isEmpty(editSkin) || isEmpty(editSkin)) {
                     Toast.makeText(getActivity(), "Please respond to every question", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -121,5 +124,9 @@ public class AboutFragment extends Fragment {
         userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
         boolean hasData = userInfo.getBoolean("hasData", false);
         return hasData;
+    }
+
+    private boolean isEmpty(EditText myeditText) {
+        return myeditText.getText().toString().trim().length() == 0;
     }
 }

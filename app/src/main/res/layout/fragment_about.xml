@@ -49,7 +49,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358" />
+        app:layout_constraintVertical_bias="0.387" />
 
     <TextView
         android:id="@+id/textView"
@@ -70,4 +70,17 @@
         android:text="Skin Type"
         app:layout_constraintBottom_toTopOf="@+id/editSkin"
         app:layout_constraintStart_toStartOf="@+id/editSkin" />
+
+    <Spinner
+        android:id="@+id/skinSpinner"
+        android:layout_width="210dp"
+        android:layout_height="30dp"
+        android:background="@color/editTextColorLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editSkin"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/editSkin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.303" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
