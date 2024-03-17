@@ -1,12 +1,20 @@
 package com.example.finalproject;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,19 @@ public class AboutFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    String name;
+    int skinType;
+    TextView editName;
+    TextView editSkin;
+    Button saveButton;
+    SharedPreferences userInfo;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_SKIN_TYPE = "skinType";
+    private static final String KEY_SPF = "spf";
+
+
 
     public AboutFragment() {
         // Required empty public constructor
@@ -59,6 +80,46 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        View view = inflater.inflate(R.layout.fragment_about, container, false);
+        editName = view.findViewById(R.id.editName);
+        editSkin = view.findViewById(R.id.editSkin);
+        saveButton = view.findViewById(R.id.saveButton);
+        if (restorePrefData()) {
+            name = userInfo.getString("name", "");
+            skinType = userInfo.getInt("skinType", 0);
+            editName.setText(name);
+            editSkin.setText(String.valueOf(skinType));
+        }
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editName.getText().equals("") || editSkin.getText().equals("") || editSkin.getText().equals("0")) {
+                    Toast.makeText(getActivity(), "Please respond to every question", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Information Saved!", Toast.LENGTH_SHORT).show();
+                    name = editName.getText().toString();
+                    skinType = Integer.parseInt(editSkin.getText().toString());
+                    savePrefsData();
+
+                }
+            }
+        });
+        return view;
+    }
+
+    private void savePrefsData() {
+        SharedPreferences userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userInfo.edit();
+        editor.putBoolean("hasData", true);
+        editor.putString("name", name);
+        editor.putInt("skinType", skinType);
+        editor.apply();
+    }
+
+    private boolean restorePrefData() {
+        userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
+        boolean hasData = userInfo.getBoolean("hasData", false);
+        return hasData;
     }
 }
