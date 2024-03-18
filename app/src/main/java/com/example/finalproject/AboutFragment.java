@@ -41,6 +41,7 @@ public class AboutFragment extends Fragment {
     Button saveButton;
     SharedPreferences userInfo;
     private Spinner skinTypeSpinner;
+    private skinTypeAdapter adapter;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_SKIN_TYPE = "skinType";
@@ -88,7 +89,8 @@ public class AboutFragment extends Fragment {
         editSkin = view.findViewById(R.id.editSkin);
         saveButton = view.findViewById(R.id.saveButton);
         skinTypeSpinner = view.findViewById(R.id.skinTypeSpinner);
-
+        adapter = new skinTypeAdapter(getContext(), skinTypeData.getskinTypeList());  // MainActivity.this
+        skinTypeSpinner.setAdapter(adapter);
 
         if (restorePrefData()) {
             name = userInfo.getString("name", "");

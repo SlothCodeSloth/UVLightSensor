@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -34,6 +36,13 @@ public class skinTypeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View rootView = LayoutInflater.from(context).inflate(R.layout.);
+        View rootView = LayoutInflater.from(context).inflate(R.layout.item_skintype, viewGroup, false);
+        TextView txtname = rootView.findViewById(R.id.name);
+        ImageView image = rootView.findViewById(R.id.image);
+
+        txtname.setText(skinTypeList.get(i).getType());
+        image.setImageResource(skinTypeList.get(i).getImage());
+
+        return rootView;
     }
 }

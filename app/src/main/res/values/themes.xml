@@ -19,4 +19,16 @@
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Material.Spinner.Underlined">
+        <item name="android:background">
+            @drawable/editbackground
+        </item>
+        <item name="android:popupBackground">
+            @drawable/editbackground
+        </item>
+        <item name="android:textAlignment">
+            textStart
+        </item>
+    </style>
 </resources>

@@ -74,8 +74,9 @@
     <Spinner
         android:id="@+id/skinTypeSpinner"
         android:layout_width="210dp"
-        android:layout_height="30dp"
-        android:background="@color/editTextColorLight"
+        android:layout_height="55dp"
+        android:backgroundTint="@color/editTextColorLight"
+        style="@style/SpinnerTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editSkin"
         app:layout_constraintHorizontal_bias="1.0"
