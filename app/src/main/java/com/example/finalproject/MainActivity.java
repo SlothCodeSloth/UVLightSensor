@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,12 +29,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
     FloatingActionButton fab;
     DrawerLayout drawerLayout;
-
     BottomNavigationView bottomNavigationView;
+    int skinType, spf;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +64,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
-                replaceFragment(new HomeFragment());
+                SharedPreferences userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
+                int skinType = userInfo.getInt("skinType", 0);
+                int spf = userInfo.getInt("spf", 0);
+                String name = userInfo.getString("name", "");
+
+                HomeFragment homeFragment = HomeFragment.newInstance(skinType, spf, name);
+                replaceFragment(homeFragment);
+
+                //replaceFragment(new HomeFragment());
             }
             else if (item.getItemId() == R.id.data) {
                 replaceFragment(new AboutFragment());
             }
-            //else if (item.getItemId() == R.id.settings) {
-            //    replaceFragment(new SettingsFragment());
-            //}
             return true;
         });
 
@@ -143,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_home) {
@@ -157,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

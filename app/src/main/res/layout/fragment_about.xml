@@ -8,7 +8,7 @@
     tools:context=".AboutFragment">
 
     <EditText
-        android:id="@+id/editSkin"
+        android:id="@+id/editSPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/editbackground"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.096" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -62,14 +62,14 @@
         app:layout_constraintStart_toStartOf="@+id/editName" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/SPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
         android:text="SPF"
-        app:layout_constraintBottom_toTopOf="@+id/editSkin"
-        app:layout_constraintStart_toStartOf="@+id/editSkin" />
+        app:layout_constraintBottom_toTopOf="@+id/editSPF"
+        app:layout_constraintStart_toStartOf="@+id/editSPF" />
 
     <Spinner
         android:id="@+id/skinTypeSpinner"
@@ -78,9 +78,9 @@
         android:layout_height="55dp"
         android:backgroundTint="@color/editTextColorLight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editSkin"
+        app:layout_constraintEnd_toEndOf="@+id/editSPF"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editSkin"
+        app:layout_constraintStart_toStartOf="@+id/editSPF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.343" />
 
