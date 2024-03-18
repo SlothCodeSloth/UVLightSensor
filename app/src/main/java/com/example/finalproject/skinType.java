@@ -29,7 +29,7 @@ public class skinType {
         return typeNumber;
     }
 
-    public void setTypeNumber(int typeNumber) {
-        this.typeNumber = typeNumber;
+    public void setTypeNumber(int num) {
+        this.typeNumber = num;
     }
 }

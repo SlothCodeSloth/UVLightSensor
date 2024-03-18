@@ -36,6 +36,7 @@ public class AboutFragment extends Fragment {
     String name;
     int spf;
     int skinTypeNumber;
+    int selectedType = 0;
     EditText editName;
     EditText editSkin;
     Button saveButton;
@@ -95,16 +96,18 @@ public class AboutFragment extends Fragment {
         if (restorePrefData()) {
             name = userInfo.getString("name", "");
             spf = userInfo.getInt("spf", 0);
+            skinTypeNumber = userInfo.getInt("skinType", 0);
             editName.setText(name);
             editSkin.setText(String.valueOf(spf));
+            skinTypeSpinner.setSelection(skinTypeNumber - 1);
         }
 
         skinTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 skinType type = (skinType) adapter.getItem(i);
-                skinTypeNumber = type.getTypeNumber();
-                Toast.makeText(getActivity(), type.getType() + " selected", Toast.LENGTH_SHORT).show();
+                selectedType = type.getTypeNumber();
+                //Toast.makeText(getActivity(), type.getType() + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -112,7 +115,6 @@ public class AboutFragment extends Fragment {
 
             }
         });
-
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +126,7 @@ public class AboutFragment extends Fragment {
                     Toast.makeText(getActivity(), "Information Saved!", Toast.LENGTH_SHORT).show();
                     name = editName.getText().toString();
                     spf = Integer.parseInt(editSkin.getText().toString());
+                    skinTypeNumber = selectedType;
                     savePrefsData();
                 }
             }
@@ -137,6 +140,7 @@ public class AboutFragment extends Fragment {
         editor.putBoolean("hasData", true);
         editor.putString("name", name);
         editor.putInt("spf", spf);
+        editor.putInt("skinType", skinTypeNumber);
         editor.apply();
     }
 
