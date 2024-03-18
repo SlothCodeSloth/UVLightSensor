@@ -7,179 +7,138 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="271dp"
-        android:layout_height="55dp"
-        android:layout_centerInParent="true"
-        android:max="100"
-        android:maxHeight="30dip"
-        android:minHeight="30dip"
-        android:progress="100"
-        android:scaleY="2.5"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/altitudeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:text=""
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeLeftTextView"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintTop_toBottomOf="@+id/uvTextView" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="70dp"
+        android:id="@+id/textView3"
+        android:layout_width="90dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Skin Type: "
-        app:layout_constraintBottom_toBottomOf="@+id/skinTextView"
-        app:layout_constraintEnd_toStartOf="@+id/skinTextView"
-        app:layout_constraintTop_toTopOf="@+id/skinTextView"
+        android:text="UV Index: "
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/uvTextView"
+        app:layout_constraintEnd_toStartOf="@+id/uvTextView"
+        app:layout_constraintTop_toTopOf="@+id/uvTextView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/spfTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="160dp"
+        android:ems="3"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.635"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="SPF: "
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spfTextView"
+        app:layout_constraintEnd_toStartOf="@+id/spfTextView"
+        app:layout_constraintTop_toTopOf="@+id/spfTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/skinTextView"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="24dp"
         android:ems="3"
         android:gravity="center"
         android:inputType="number"
-        android:textSize="12sp"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spfTextView" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:text="UV Index: "
-        app:layout_constraintBottom_toBottomOf="@+id/uvTextView"
-        app:layout_constraintEnd_toStartOf="@+id/uvTextView"
-        app:layout_constraintTop_toTopOf="@+id/uvTextView"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:text="Altitude: "
-        app:layout_constraintBottom_toBottomOf="@+id/altitudeTextView"
-        app:layout_constraintEnd_toStartOf="@+id/altitudeTextView"
-        app:layout_constraintTop_toTopOf="@+id/altitudeTextView"
-        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/uvTextView"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:ems="3"
         android:gravity="center"
         android:inputType="number"
-        android:textSize="12sp"
+        android:text=""
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/skinTextView" />
 
-    <EditText
-        android:id="@+id/altitudeTextView"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="90dp"
         android:layout_height="40dp"
-        android:layout_marginTop="4dp"
-        android:ems="3"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:inputType="number"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uvTextView" />
-
-    <EditText
-        android:id="@+id/spfTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="128dp"
-        android:ems="3"
-        android:gravity="center"
-        android:inputType="number"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Skin Type: "
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/skinTextView"
+        app:layout_constraintEnd_toStartOf="@+id/skinTextView"
+        app:layout_constraintTop_toTopOf="@+id/skinTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="70dp"
+        android:id="@+id/textView4"
+        android:layout_width="90dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="SPF: "
-        app:layout_constraintBottom_toBottomOf="@+id/spfTextView"
-        app:layout_constraintEnd_toStartOf="@+id/spfTextView"
-        app:layout_constraintTop_toTopOf="@+id/spfTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        android:text="Altitude: "
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/altitudeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/altitudeTextView"
+        app:layout_constraintTop_toTopOf="@+id/altitudeTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:text="Name: "
-        app:layout_constraintBottom_toBottomOf="@+id/nameTextEdit"
-        app:layout_constraintEnd_toStartOf="@+id/nameTextEdit"
-        app:layout_constraintTop_toTopOf="@+id/nameTextEdit"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/nameTextEdit"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="80dp"
-        android:ems="3"
+        android:layout_height="100dp"
+        android:background="@drawable/headerbkg"
         android:gravity="center"
-        android:textSize="12sp"
+        android:text="Welcome!"
+        android:textSize="32dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="364dp"
-        android:text="Apply Suncsreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonSub"
-        android:layout_width="44dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="1dp"
-        android:text="-"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="44dp"
         android:layout_height="47dp"
-        android:layout_marginStart="320dp"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="1dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="@+id/button"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -187,20 +146,54 @@
         android:id="@+id/timeLeftTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
         android:text="Estimated Time Left: "
+        android:textColor="@color/lavender"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="44dp"
+        android:max="100"
+        android:maxHeight="30dip"
+        android:minHeight="30dip"
+        android:progress="100"
+        android:progressDrawable="@drawable/custom_progressbar"
+        android:scaleY="2.5"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/apply"
+        android:id="@+id/buttonSub"
+        android:layout_width="44dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="1dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="608dp"
-        android:text="@string/apply"
+        android:layout_marginTop="604dp"
+        android:text="Apply Suncsreen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     SharedPreferences userInfo;
     private Button button, button2, button3;
     private EditText spfTextView, skinTextView, uvTextView, altitudeTextView;
-    private TextView timeLeftView;
+    private TextView timeLeftView, nameTextView;
     private int spf, skin;
     private double totalTime, currentTime, uv, altitude;
     private CountDownTimer countDownTimer;
@@ -144,6 +144,7 @@ public class HomeFragment extends Fragment {
 
         spfTextView = view.findViewById(R.id.spfTextView);
         skinTextView = view.findViewById(R.id.skinTextView);
+        nameTextView = view.findViewById(R.id.textViewName);
         uvTextView = view.findViewById(R.id.uvTextView);
         altitudeTextView = view.findViewById(R.id.altitudeTextView);
         timeLeftView = view.findViewById(R.id.timeLeftTextView);
@@ -164,6 +165,10 @@ public class HomeFragment extends Fragment {
             // Update EditText fields with retrieved data
             skinTextView.setText(String.valueOf(skin));
             spfTextView.setText(String.valueOf(spf));
+            String greeting = "Welcome" + name + "!";
+            nameTextView.setText(greeting);
+            uvTextView.setText("3");
+            altitudeTextView.setText("1042");
             savePrefsData();
             // You can update other EditText fields as well if needed
         }
@@ -245,7 +250,7 @@ public class HomeFragment extends Fragment {
                 minute = temp > 60 ? (int) temp / 60 : 0;
                 temp -= minute * 60;
                 second = temp > 1 ? (int) temp : 0;
-                String time = "Estimated Time Remaining: " + String.format("%02d:%02d:%02d", hour, minute, second);
+                String time = "Estimated Time Remaining\n" + String.format("%02d:%02d:%02d", hour, minute, second);
                 timeLeftView.setText(time);
 
             }
