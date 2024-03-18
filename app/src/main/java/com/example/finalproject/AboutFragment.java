@@ -2,20 +2,19 @@ package com.example.finalproject;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -35,7 +34,8 @@ public class AboutFragment extends Fragment {
     private String mParam2;
 
     String name;
-    int skinType;
+    int spf;
+    int skinTypeNumber;
     EditText editName;
     EditText editSkin;
     Button saveButton;
@@ -94,22 +94,37 @@ public class AboutFragment extends Fragment {
 
         if (restorePrefData()) {
             name = userInfo.getString("name", "");
-            skinType = userInfo.getInt("skinType", 0);
+            spf = userInfo.getInt("spf", 0);
             editName.setText(name);
-            editSkin.setText(String.valueOf(skinType));
+            editSkin.setText(String.valueOf(spf));
         }
+
+        skinTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                skinType type = (skinType) adapter.getItem(i);
+                skinTypeNumber = type.getTypeNumber();
+                Toast.makeText(getActivity(), type.getType() + " selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isEmpty(editSkin) || isEmpty(editSkin)) {
-                    Toast.makeText(getActivity(), "Please respond to every question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please respond to every prompt", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getActivity(), "Information Saved!", Toast.LENGTH_SHORT).show();
                     name = editName.getText().toString();
-                    skinType = Integer.parseInt(editSkin.getText().toString());
+                    spf = Integer.parseInt(editSkin.getText().toString());
                     savePrefsData();
-
                 }
             }
         });
@@ -121,7 +136,7 @@ public class AboutFragment extends Fragment {
         SharedPreferences.Editor editor = userInfo.edit();
         editor.putBoolean("hasData", true);
         editor.putString("name", name);
-        editor.putInt("skinType", skinType);
+        editor.putInt("spf", spf);
         editor.apply();
     }
 

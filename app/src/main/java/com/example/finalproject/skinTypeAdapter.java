@@ -26,7 +26,7 @@ public class skinTypeAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return skinTypeList.get(i);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.finalproject;
 public class skinType {
     private String type;
     private int image;
+    private int typeNumber;
 
     public skinType() {
 
@@ -22,5 +23,13 @@ public class skinType {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public int getTypeNumber() {
+        return typeNumber;
+    }
+
+    public void setTypeNumber(int typeNumber) {
+        this.typeNumber = typeNumber;
     }
 }
