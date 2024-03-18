@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment {
             // Update EditText fields with retrieved data
             skinTextView.setText(String.valueOf(skin));
             spfTextView.setText(String.valueOf(spf));
-            String greeting = "Welcome" + name + "!";
+            String greeting = "Welcome " + name + "!";
             nameTextView.setText(greeting);
             uvTextView.setText("3");
             altitudeTextView.setText("1042");
