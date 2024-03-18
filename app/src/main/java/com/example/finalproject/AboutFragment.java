@@ -40,6 +40,7 @@ public class AboutFragment extends Fragment {
     EditText editSkin;
     Button saveButton;
     SharedPreferences userInfo;
+    private Spinner skinTypeSpinner;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     private static final String KEY_SKIN_TYPE = "skinType";
@@ -86,6 +87,8 @@ public class AboutFragment extends Fragment {
         editName = view.findViewById(R.id.editName);
         editSkin = view.findViewById(R.id.editSkin);
         saveButton = view.findViewById(R.id.saveButton);
+        skinTypeSpinner = view.findViewById(R.id.skinTypeSpinner);
+
 
         if (restorePrefData()) {
             name = userInfo.getString("name", "");

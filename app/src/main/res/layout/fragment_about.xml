@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/editSkin" />
 
     <Spinner
-        android:id="@+id/skinSpinner"
+        android:id="@+id/skinTypeSpinner"
         android:layout_width="210dp"
         android:layout_height="30dp"
         android:background="@color/editTextColorLight"
