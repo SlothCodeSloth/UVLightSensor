@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -24,8 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,20 +30,9 @@ import androidx.fragment.app.Fragment;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-
 
 public class HomeFragment extends Fragment {
     private static final String CHANNEL_ID = "your_channel_id";
@@ -222,7 +208,7 @@ public class HomeFragment extends Fragment {
         totalTime= formula((int) skin,spf,uv,altitude);
         //totalTime = ((skin * spf) / (uv * altitude)) * 60;
         currentTime = totalTime;
-        progressBar.setMax((int) currentTime * 10);
+        progressBar.setMax((int) currentTime * 100);
         timeLeftView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -241,7 +227,7 @@ public class HomeFragment extends Fragment {
                 x = totalTime / x;
                 currentTime -= 0.1 * x;
                 updateTimerText();
-                progressBar.setProgress((int) currentTime * 10, true);
+                progressBar.setProgress((int) currentTime * 100, true);
 
                 int hour, minute, second;
                 double temp = currentTime / x;

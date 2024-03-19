@@ -88,6 +88,7 @@ public class AboutFragment extends Fragment {
             editName.setText(name);
             editSPF.setText(String.valueOf(spf));
             skinTypeSpinner.setSelection(skinTypeNumber - 1);
+            bluetoothView.setText("Connected to: Nano 33 BLE (Temp Name)"); // Remove
         }
 
         skinTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

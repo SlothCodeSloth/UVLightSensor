@@ -123,6 +123,7 @@
         android:layout_height="100dp"
         android:background="@drawable/headerbkg"
         android:gravity="center"
+        android:textColor="@color/white"
         android:text="Welcome!"
         android:textSize="32dp"
         android:textStyle="bold"
