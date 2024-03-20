@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    style="@style/Background">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="@color/lavender"
+        style="@style/Text"
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textColor="@color/lavender"
+        style="@style/Text"
         android:textSize="20dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"

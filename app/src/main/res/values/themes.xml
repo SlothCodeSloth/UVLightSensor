@@ -56,4 +56,18 @@
     <style name="Popup">
         <item name="android:background">@drawable/dialogbkg_light</item>
     </style>
+
+    <style name="Background">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="IntroButtons">
+        <item name="android:background">@drawable/border_light</item>
+        <item name="drawableTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Indicator">
+        <item name="tabBackground">@drawable/indicator_selector_light</item>
+    </style>
 </resources>
