@@ -7,13 +7,12 @@
         <item name="colorOnPrimary">@color/black</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/editTextColorDark</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">#ababab</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- <item name="android:statusBarColor">@color/purple_200</item> -->
         <!-- Customize your theme here. -->
-        <item name="colorTertiary">@color/editTextColorLight</item>
     </style>
 
     <style name="DialogAnimation">
@@ -23,16 +22,39 @@
 
     <style name="SpinnerTheme" parent="android:Widget.Material.Spinner.Underlined">
         <item name="android:background">
-            @drawable/editbackgroundlight
+            @drawable/editbackgrounddark
         </item>
         <item name="android:popupBackground">
-            @drawable/editbackgroundlight
+            @drawable/editbackgrounddark
         </item>
         <item name="android:textAlignment">
             textStart
         </item>
     </style>
 
-    <style name="ImageChange"><item name="android:background">@drawable/headerbkg</item> </style>
-    <style name="TextBoxBackground"><item name="android:background">@drawable/editbackgroundlight</item> </style>
+    <style name="ImageChange">
+        <item name="android:background">@drawable/headerbkg_dark</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextBoxBackground">
+        <item name="android:background">@drawable/editbackgrounddark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/purple_200</item>
+    </style>
+
+    <style name="Label">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ImageColor">
+        <item name="android:src">@drawable/icon_info_dark</item>
+    </style>
+
+    <style name="Popup">
+        <item name="android:background">@drawable/dialogbkg_dark</item>
+    </style>
 </resources>

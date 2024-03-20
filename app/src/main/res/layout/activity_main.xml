@@ -15,15 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/lavender"
-            android:elevation="4dp"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,10 +46,9 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab"
+                    style="@style/ImageColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:src="@drawable/icon_info"
                     app:layout_anchor="@id/bottomAppBar"
                     app:maxImageSize="40dp" />
 

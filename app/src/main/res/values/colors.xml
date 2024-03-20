@@ -25,5 +25,5 @@
 
     <!-- Colors for Edit Text -->
     <color name = "editTextColorLight">#F2F7F4</color>
-    <color name = "editTextColorDark">#1A2A4D</color>
+    <color name = "editTextColorDark">#1f1f1f</color>
 </resources>

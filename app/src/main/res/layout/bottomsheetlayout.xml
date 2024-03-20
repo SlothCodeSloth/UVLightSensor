@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialogbkg">
+    style="@style/Popup">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:text="Team Rocket"
             android:layout_gravity="center"
-            android:textColor="@color/lavender" />
+            style="@style/Text" />
 
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upload a video"
-            android:textColor="@color/lavender"
+            style="@style/Text"
             android:layout_marginLeft="30dp"
             android:textSize="16sp"/>
 
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create a short"
-            android:textColor="@color/lavender"
+            style="@style/Text"
             android:layout_marginLeft="30dp"
             android:textSize="16sp"/>
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Go live"
-            android:textColor="@color/lavender"
+            style="@style/Text"
             android:textSize="16sp" />
 
     </LinearLayout>
