@@ -27,7 +27,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/lavender_border"
-        android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
+        android:drawableRight="@drawable/icon_arrow"
         android:drawableTint="@color/white"
         android:text="Next"
         android:textColor="@color/white"

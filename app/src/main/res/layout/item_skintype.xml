@@ -9,7 +9,7 @@
         android:id="@+id/image"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/type1"
+        android:src="@drawable/img_type1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

@@ -68,9 +68,9 @@ public class IntroActivity extends AppCompatActivity {
         });
 
         List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Protect your body!", "UV Rays, which comprise\n much of the sunlight we need\n can harm our skin. ", R.drawable.img1));
-        mList.add(new ScreenItem("Sunscreen is crucial!", "But most of society\n doesn't know that it needs\n reapplication.", R.drawable.img2));
-        mList.add(new ScreenItem("Know When to Reapply!", "Connect your \"TempName\"\n to your phone to keep\n track of your sunscreen.", R.drawable.img3));
+        mList.add(new ScreenItem("Protect your body!", "UV Rays, which comprise\n much of the sunlight we need\n can harm our skin. ", R.drawable.imgstart_img1));
+        mList.add(new ScreenItem("Sunscreen is crucial!", "But most of society\n doesn't know that it needs\n reapplication.", R.drawable.imgstart_img2));
+        mList.add(new ScreenItem("Know When to Reapply!", "Connect your \"TempName\"\n to your phone to keep\n track of your sunscreen.", R.drawable.imgstart_img3));
 
         screenPager = findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this, mList);

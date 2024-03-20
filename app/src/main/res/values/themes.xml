@@ -22,13 +22,22 @@
 
     <style name="SpinnerTheme" parent="android:Widget.Material.Spinner.Underlined">
         <item name="android:background">
-            @drawable/editbackground
+            @drawable/editbackgroundlight
         </item>
         <item name="android:popupBackground">
-            @drawable/editbackground
+            @drawable/editbackgroundlight
         </item>
         <item name="android:textAlignment">
             textStart
         </item>
+    </style>
+
+    <style name="ImageChange"><item name="android:background">@drawable/headerbkg</item> </style>
+    <style name="TextBoxBackground">
+        <item name="android:background">@drawable/editbackgroundlight</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Label">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

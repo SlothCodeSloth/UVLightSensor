@@ -20,6 +20,7 @@
 
     <TextView
         android:id="@+id/bluetoothView"
+        style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginBottom="4dp"
+        style="@style/Label"
         android:text="@string/name"
         app:layout_constraintBottom_toTopOf="@+id/editName"
         app:layout_constraintStart_toStartOf="@+id/editName" />
@@ -57,6 +59,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="4dp"
         android:text="SPF"
+        style="@style/Label"
         app:layout_constraintBottom_toTopOf="@+id/editSPF"
         app:layout_constraintStart_toStartOf="@+id/editSPF" />
 
@@ -64,8 +67,7 @@
         android:id="@+id/editSPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/editbackground"
-        android:backgroundTint="@color/editTextColorLight"
+        style="@style/TextBoxBackground"
         android:ems="10"
         android:inputType="numberDecimal"
         android:text=""
@@ -80,8 +82,7 @@
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/editbackground"
-        android:backgroundTint="@color/editTextColorLight"
+        style="@style/TextBoxBackground"
         android:ems="10"
         android:inputType="text"
         android:text=""
@@ -106,6 +107,7 @@
         app:layout_constraintVertical_bias="0.507" />
 
     <TextView
+        style="@style/Label"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,7 +121,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:background="@drawable/headerbkg"
+        style="@style/ImageChange"
         android:text="Tell Us About Yourself"
         android:textColor="@color/white"
         android:gravity="center"

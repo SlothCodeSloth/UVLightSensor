@@ -14,7 +14,7 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/logo440"
+            android:background="@drawable/img_logo440"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="8dp" />
 
@@ -41,7 +41,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_person_24"/>
+            android:src="@drawable/icon_person"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_person_24"/>
+            android:src="@drawable/icon_person"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_person_24" />
+            android:src="@drawable/icon_person" />
 
         <TextView
             android:layout_width="wrap_content"
