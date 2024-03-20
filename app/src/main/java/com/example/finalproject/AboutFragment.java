@@ -32,6 +32,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AboutFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -107,7 +109,29 @@ public class AboutFragment extends Fragment {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fake();
+                //fake();
+                // Create boolean variables to store the permissions currently granted.
+                boolean locationGranted = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+                boolean bluetoothGranted = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED;
+
+                //Check for Location and Bluetooth permissions
+                if (!locationGranted || !bluetoothGranted) {
+                    // Prepare a list of permissions to request.
+                    ArrayList<String> permissionsRequest = new ArrayList<>();
+                    if (!locationGranted) {
+                        permissionsRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                    }
+                    if (!bluetoothGranted) {
+                        Toast.makeText(getActivity(), "No Bluetooth", Toast.LENGTH_SHORT).show();
+                        permissionsRequest.add(Manifest.permission.BLUETOOTH);
+                    }
+
+                    // Send a request for the missing permissions.
+                    ActivityCompat.requestPermissions(getActivity(), permissionsRequest.toArray(new String[0]), PERMISSION_REQUEST_CODE);
+                }
+                else {
+                    startBLEScan();
+                }
             }
         });
 
@@ -154,6 +178,8 @@ public class AboutFragment extends Fragment {
     }
 
     private void startBLEScan() {
+        Toast.makeText(getActivity(), "Trying BLE.", Toast.LENGTH_SHORT).show();
+
         if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(getActivity(), "BLE is not supported on this device.", Toast.LENGTH_SHORT).show();
             return;
@@ -207,17 +233,21 @@ public class AboutFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (permissions.length > 0 && permissions[0].equals(android.Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Location permission granted, now check Bluetooth permission
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                    // Permission not granted. Prompt to request it.
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH}, PERMISSION_REQUEST_CODE);
-                } else {
-                    // Both permissions granted, start BLE scan
-                    startBLEScan();
+            boolean allPermissionsGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false;
+                    break;
                 }
-            } else {
-                Toast.makeText(getActivity(), "Permission to scan denied.", Toast.LENGTH_SHORT).show();
+            }
+
+            if (allPermissionsGranted) {
+                // Both Permissions have been granted. Start a BLE Scan.
+                startBLEScan();
+            }
+            else {
+                // One or both of the permissions has not been granted. Operation Failed.
+                Toast.makeText(getActivity(), "Permission denied. Cannot start BLE scan.", Toast.LENGTH_SHORT).show();
             }
         }
     }
