@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -17,15 +18,20 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.shape.MaterialShapeDrawable;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
-
     FloatingActionButton fab;
     BottomNavigationView bottomNavigationView;
     int skinType, spf;
     String name;
+    BottomAppBar bottomAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,10 @@ public class MainActivity extends AppCompatActivity{
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
+        bottomAppBar = findViewById(R.id.bottomAppBar);
+        float cornerRadius = getResources().getDimension(R.dimen.bottom_app_bar_corner_radius);
+        MaterialShapeDrawable shapeDrawable = (MaterialShapeDrawable) bottomAppBar.getBackground();
+        shapeDrawable.setCornerSize(cornerRadius);
 
         replaceFragment(new HomeFragment());
 

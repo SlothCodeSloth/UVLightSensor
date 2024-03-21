@@ -57,6 +57,7 @@
 
     <style name="Background">
         <item name="android:background">@color/white</item>
+        <item name="cornerRadius"></item>
     </style>
 
     <style name="IntroButtons">
