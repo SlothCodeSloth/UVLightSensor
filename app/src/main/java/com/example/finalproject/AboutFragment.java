@@ -109,28 +109,25 @@ public class AboutFragment extends Fragment {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //fake();
-                // Create boolean variables to store the permissions currently granted.
-                boolean locationGranted = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-                boolean bluetoothGranted = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED;
+                // Check if Bluetooth is supported on the device
+                BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
+                BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
 
-                //Check for Location and Bluetooth permissions
-                if (!locationGranted || !bluetoothGranted) {
-                    // Prepare a list of permissions to request.
-                    ArrayList<String> permissionsRequest = new ArrayList<>();
-                    if (!locationGranted) {
-                        permissionsRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                    }
-                    if (!bluetoothGranted) {
-                        Toast.makeText(getActivity(), "No Bluetooth", Toast.LENGTH_SHORT).show();
-                        permissionsRequest.add(Manifest.permission.BLUETOOTH);
-                    }
-
-                    // Send a request for the missing permissions.
-                    ActivityCompat.requestPermissions(getActivity(), permissionsRequest.toArray(new String[0]), PERMISSION_REQUEST_CODE);
+                if (bluetoothAdapter == null) {
+                    // Device doesn't support Bluetooth
+                    Toast.makeText(getActivity(), "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                else {
-                    startBLEScan();
+
+                // Ensure Bluetooth is enabled
+                if (!bluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABlE_BT);
+                } else {
+                    // Bluetooth is enabled, open the Bluetooth settings
+                    Intent intentOpenBluetoothSettings = new Intent();
+                    intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                    startActivity(intentOpenBluetoothSettings);
                 }
             }
         });
@@ -178,90 +175,6 @@ public class AboutFragment extends Fragment {
     }
 
     private void startBLEScan() {
-        Toast.makeText(getActivity(), "Trying BLE.", Toast.LENGTH_SHORT).show();
-
-        if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(getActivity(), "BLE is not supported on this device.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Permission not granted. Prompt to request it.
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
-            return;
-        }
-
-        BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABlE_BT);
-            return;
-        }
-
-        BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-
-        bluetoothLeScanner.startScan(scanCallBack);
     }
 
-    private ScanCallback scanCallBack = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbacktype, ScanResult result) {
-            super.onScanResult(callbacktype, result);
-
-            BluetoothDevice device = result.getDevice();
-
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED) {
-                String deviceName = device.getName();
-                String deviceAddress = device.getAddress();
-                Log.d(TAG, "Device Found: " + deviceName + " (" + deviceAddress + ")");
-                String msg = "Connected to: " + deviceName;
-                bluetoothView.setText(msg);
-            }
-            else {
-                Log.e(TAG, "Permission to access Bluetooth information denied.");
-            }
-        }
-        public void onScanFailed(int errorCode) {
-            super.onScanFailed(errorCode);
-            Log.e(TAG, "BLE scan failed with error code: " + errorCode);
-        }
-    };
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            boolean allPermissionsGranted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    allPermissionsGranted = false;
-                    break;
-                }
-            }
-
-            if (allPermissionsGranted) {
-                // Both Permissions have been granted. Start a BLE Scan.
-                startBLEScan();
-            }
-            else {
-                // One or both of the permissions has not been granted. Operation Failed.
-                Toast.makeText(getActivity(), "Permission denied. Cannot start BLE scan.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    public void fake() {
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Permission not granted. Prompt to request it.
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
-            (new Handler()).postDelayed(this::wait5, 5000);
-            return;
-        }
-        (new Handler()).postDelayed(this::wait5, 5000);}
-
-    public void wait5() {
-        bluetoothView.setText("Connected to: Nano 33 BLE (Temp Name)");
-    }
 }
