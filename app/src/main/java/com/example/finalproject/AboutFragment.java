@@ -37,16 +37,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class AboutFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final int PERMISSION_REQUEST_CODE = 1001;
-
-    private static final int REQUEST_ENABlE_BT = 1;
     private static final String TAG = "AboutFragment";
-
-    // TODO: Rename and change types of parameters
-
     String name;
     int spf = 0;
     int skinTypeNumber;
@@ -111,15 +103,7 @@ public class AboutFragment extends Fragment {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!checkPermissions()) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH},
-                            PERMISSION_REQUEST_CODE);
-                }
-                else {
-                    doBluetooth();
-                }
+                    startBLEScan();
             }
         });
 
@@ -155,32 +139,6 @@ public class AboutFragment extends Fragment {
         editor.apply();
     }
 
-    private void doBluetooth() {
-        // Check if Bluetooth is supported on the device
-        BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-
-        if (bluetoothAdapter == null) {
-            // Device doesn't support Bluetooth
-            Toast.makeText(getActivity(), "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Ensure Bluetooth is enabled
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABlE_BT);
-        }
-        else {
-            // Bluetooth is enabled
-            // I want to connect to a specific BLE Device under the name "UVSensor"
-            startBLEScan();
-            //Intent intentOpenBluetoothSettings = new Intent();
-            //intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-            //startActivity(intentOpenBluetoothSettings);
-        }
-    }
-
     private boolean restorePrefData() {
         userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
         boolean hasData = userInfo.getBoolean("hasData", false);
@@ -190,70 +148,4 @@ public class AboutFragment extends Fragment {
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
     }
-
-    private void startBLEScan() {
-        BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-        BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-
-        ScanCallback scanCallback = new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult result) {
-                super.onScanResult(callbackType, result);
-                BluetoothDevice device = result.getDevice();
-                // BLUETOOTH CONNECT
-                String deviceName = device.getName();
-                if (deviceName != null && deviceName.equals("UVSensor")) {
-                    Log.d(TAG, "Found Device: " + deviceName);
-                    // BLUETOOTH SCAN
-                    bluetoothLeScanner.stopScan(this);
-                }
-            }
-
-            @Override
-            public void onScanFailed(int errorCode) {
-                super.onScanFailed(errorCode);
-                Log.e(TAG, "BLE Scan failed with error code " + errorCode);
-            }
-        };
-
-        // Definition of Scan Filters
-        ScanFilter scanFilter = new ScanFilter.Builder()
-                .setDeviceName("UVSensor")
-                .build();
-        ArrayList<ScanFilter> filters = new ArrayList<>();
-        filters.add(scanFilter);
-
-        // Definition of Scan Settings
-        ScanSettings scanSettings = new ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                .build();
-
-        // Start Scanning
-        bluetoothLeScanner.startScan(filters, scanSettings, scanCallback);
-    }
-
-    private boolean checkPermissions() {
-        return ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.BLUETOOTH_ADMIN) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (checkPermissions()) {
-                doBluetooth();
-            }
-            else {
-                Toast.makeText(getActivity(), "Permission denied. Cannot show notification.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
 }
