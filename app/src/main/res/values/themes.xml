@@ -1,0 +1,79 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.BLETest3" parent="Theme.MaterialComponents.DayNight.NoActionBar">>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/lavender</item>
+        <item name="colorPrimaryVariant">@color/lavender</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorOnSecondary">#666666</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/lavender</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Material.Spinner.Underlined">
+        <item name="android:background">
+            @drawable/editbackgroundlight
+        </item>
+        <item name="android:popupBackground">
+            @drawable/editbackgroundlight
+        </item>
+        <item name="android:textAlignment">
+            textStart
+        </item>
+    </style>
+
+    <style name="ImageChange">
+        <item name="android:background">@drawable/headerbkg_light</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextBoxBackground">
+        <item name="android:background">@drawable/editbackgroundlight</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/lavender</item>
+    </style>
+
+    <style name="Label">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ImageColor">
+        <item name="android:src">@drawable/icon_info_light</item>
+    </style>
+
+    <style name="Background">
+        <item name="android:background">@color/white</item>
+        <item name="cornerRadius"></item>
+    </style>
+
+    <style name="IntroButtons">
+        <item name="android:background">@drawable/border_light</item>
+        <item name="drawableTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Indicator">
+        <item name="tabBackground">@drawable/indicator_selector_light</item>
+    </style>
+
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="progressBarStyle">?android:attr/progressBarStyleHorizontal</item>
+        <item name="android:progressDrawable">@drawable/progressbar_light</item>
+    </style>
+
+    <style name="BottomNavBarStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <!-- Change the background color -->
+        <item name="android:background">@drawable/round_corners_light</item>
+        <item name="android:backgroundTint">@color/editTextColorLight</item>
+    </style>
+</resources>
