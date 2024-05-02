@@ -31,4 +31,9 @@ public class FragmentPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return fragments.size();
     }
+
+    // Method to retrieve a fragment by position
+    public Fragment getFragment(int position) {
+        return fragments.get(position);
+    }
 }

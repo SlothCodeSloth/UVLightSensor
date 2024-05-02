@@ -2,9 +2,11 @@ package com.example.bletest3;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ public class ProfileFragment extends Fragment {
     SharedPreferences userInfo;
     private Spinner skinTypeSpinner;
     private skinTypeAdapter adapter;
+    private DataPassListener dataPassListener;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,19 +63,6 @@ public class ProfileFragment extends Fragment {
         adapter = new skinTypeAdapter(getContext(), skinTypeData.getskinTypeList());  // MainActivity.this
         skinTypeSpinner.setAdapter(adapter);
 
-        /*
-        if (restorePrefData()) {
-            name = userInfo.getString("name", "");
-            spf = userInfo.getInt("spf", 0);
-            skinTypeNumber = userInfo.getInt("skinType", 0);
-            editName.setText(name);
-            editSPF.setText(String.valueOf(spf));
-            skinTypeSpinner.setSelection(skinTypeNumber - 1);
-            bluetoothView.setText("Connected to: Nano 33 BLE (Temp Name)"); // Remove
-        }
-
-         */
-
         skinTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,38 +83,44 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please respond to every prompt", Toast.LENGTH_SHORT).show();
                 }
                 else if (Integer.parseInt(editSPF.getText().toString()) == 0) {
-                    Toast.makeText(getActivity(), "Please respond to every prompt correctly", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(getActivity(), "SPF must be greater than 0", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getActivity(), "Information Saved!", Toast.LENGTH_SHORT).show();
                     name = editName.getText().toString();
                     spf = Integer.parseInt(editSPF.getText().toString());
                     skinTypeNumber = selectedType;
-                    savePrefsData();
+                    //savePrefsData();
+                    if (dataPassListener != null) {
+                        dataPassListener.onDataPassedHome(name, spf, skinTypeNumber);
+                    }
                 }
             }
         });
         return view;
     }
 
-    private void savePrefsData() {
-        SharedPreferences userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = userInfo.edit();
-        editor.putBoolean("hasData", true);
-        editor.putString("name", name);
-        editor.putInt("spf", spf);
-        editor.putInt("skinType", skinTypeNumber);
-        editor.apply();
-    }
-
-    private boolean restorePrefData() {
-        userInfo = getActivity().getSharedPreferences("userInfo", MODE_PRIVATE);
-        boolean hasData = userInfo.getBoolean("hasData", false);
-        return hasData;
-    }
-
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
+    }
+
+    public interface DataPassListener {
+        void onDataPassedHome(String name, int spf, int skinType);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof DataPassListener) {
+            dataPassListener = (DataPassListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement DataPassListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        dataPassListener = null;
     }
 }
