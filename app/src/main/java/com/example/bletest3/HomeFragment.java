@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment {
                 //textView.setText("Connected to: UVSensor");
                 //textView4.setText("Altitude: 19m");
                 //Toast.makeText(requireContext(), "Found UV Sensor", Toast.LENGTH_SHORT).show();
-                startRandomNumberGeneration();
+                //startRandomNumberGeneration();
                 checkPermissions();
             }
         });
@@ -164,6 +164,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 disconnect();
+                Log.d("MyApp", "DISCONNECT");
                 stopButton.setVisibility(View.INVISIBLE);
                 scanButton.setVisibility(View.VISIBLE);
                 stopButton.startAnimation(btnLeaveBottom);
@@ -382,9 +383,10 @@ public class HomeFragment extends Fragment {
 
         if (bluetoothGatt != null) {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
-                stopScan();
+                //stopScan();
+                Log.d("MyApp", "DISCONNECT");
                 bluetoothGatt.disconnect();
-                stopRandomNumberGeneration();
+                //stopRandomNumberGeneration();
             }
             else {
                 Toast.makeText(getContext(), "Permissions not granted 1.", Toast.LENGTH_SHORT).show();
@@ -481,6 +483,8 @@ public class HomeFragment extends Fragment {
                 scanButton.setAnimation(btnLeaveBottom);
                 stopButton.setAnimation(btnAnim);
                 // Remove
+
+                stopScan();
             }
             else {
                 Toast.makeText(requireContext(), "Permissions not granted 3.", Toast.LENGTH_SHORT).show();
@@ -534,6 +538,13 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void run() {
                             textView.setText("Device disconnected");
+                            stopButton.setVisibility(View.INVISIBLE);
+                            scanButton.setVisibility(View.VISIBLE);
+                            stopButton.startAnimation(btnLeaveBottom);
+                            scanButton.startAnimation(btnAnim);
+                            Log.d("MyApp", "DISCONNECT");
+                            Log.d("MyApp", "DISCONNECT2");
+
                         }
                     });
                 }

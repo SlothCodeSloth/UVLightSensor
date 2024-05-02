@@ -24,14 +24,11 @@ public class ProfileFragment extends Fragment {
     int spf = 0;
     int skinTypeNumber;
     int selectedType = 0;
-    EditText editName;
-    EditText editSPF;
+    EditText editName, editSPF;
     Button saveButton;
     SharedPreferences userInfo;
     private Spinner skinTypeSpinner;
     private skinTypeAdapter adapter;
-    private Button scanButton;
-    TextView bluetoothView;
 
     public ProfileFragment() {
         // Required empty public constructor
