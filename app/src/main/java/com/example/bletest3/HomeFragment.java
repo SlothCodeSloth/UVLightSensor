@@ -1,7 +1,5 @@
 package com.example.bletest3;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -22,13 +20,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -52,8 +47,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -72,7 +65,6 @@ public class HomeFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int PERMISSION_REQUEST_CODE = 2;
     private static final long SCAN_TIMEOUT_MS = 60000; // 30 Second Timer
-    private LocationManager locationManager;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
     private BluetoothGatt bluetoothGatt;
@@ -86,23 +78,23 @@ public class HomeFragment extends Fragment {
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT};
     Button button, scanButton, stopButton;
-    TextView textView, textView3, textView4;
+    TextView textView, textView3, textView4, timeLeftView, nameTextView;
     Animation btnAnim, btnLeaveRight, btnLeaveBottom;
     private LineChart lineChart;
     private List<Entry> entries = new ArrayList<>();
     private LineDataSet dataSet;
-    private TextView timeLeftView, nameTextView;
     private double totalTime, currentTime, uv, altitude;
     private CountDownTimer countDownTimer;
     private ProgressBar progressBar;
     private Handler handler;
     private String name;
+    private int spfVal, skinTypeVal;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance(String name, int spfVal, int skinTypeVal) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
 
@@ -143,10 +135,10 @@ public class HomeFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         handler = new Handler();
+        nameTextView = view.findViewById(R.id.textViewName);
         currentTime = totalTime;
 
-
-                // Customize the LineChart
+        // Customize the LineChart
         setupLineChart();
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -779,4 +771,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    public void updateData(String newName, int newspf, int newSkinType) {
+        name = "Welcome " + newName;
+        spfVal = newspf;
+        skinTypeVal = newSkinType;
+    }
 }

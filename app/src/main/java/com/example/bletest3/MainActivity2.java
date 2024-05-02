@@ -1,5 +1,6 @@
 package com.example.bletest3;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
@@ -11,11 +12,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity implements ProfileFragment.DataPassListener {
 
     ChipNavigationBar chipNavigationBar;
     ViewPager2 viewPager;
     FragmentPagerAdapter pagerAdapter;
+    String name;
+    int spf, skinTypeVal;
+    SharedPreferences userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,18 @@ public class MainActivity2 extends AppCompatActivity {
 
         int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         boolean isNightMode = currentMode == Configuration.UI_MODE_NIGHT_YES;
+
+        if (restorePrefData()) {
+            name = userInfo.getString("name", "");
+            spf = userInfo.getInt("spf", 0);
+            skinTypeVal = userInfo.getInt("skinType", 0);
+            pagerAdapter.addFragment(new HomeFragment(name, spf, skinTypeVal));
+            pagerAdapter.addFragment(new ProfileFragment(name, spf, skinTypeVal));
+        }
+        else {
+            pagerAdapter.addFragment(new HomeFragment());
+            pagerAdapter.addFragment(new ProfileFragment());
+        }
 
         // Set background color for each menu item based on mode
         if (isNightMode) {
@@ -80,5 +96,30 @@ public class MainActivity2 extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDataPassedHome(String newName, int newspf, int newSkinType) {
+        // Receive data from the ProfileFragment.
+        HomeFragment homeFragment = (HomeFragment) pagerAdapter.getFragment(0);
+        homeFragment.updateData(name, newspf, newSkinType);
+        name = newName;
+        spf = newspf;
+        skinTypeVal = newSkinType;
+        savePrefsData();
+    }
+
+    private void savePrefsData() {
+        SharedPreferences userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userInfo.edit();
+        editor.putBoolean("hasData", true);
+        editor.putString("name", name);
+        editor.putInt("spf", spf);
+        editor.putInt("skinType", skinTypeVal);
+    }
+
+    private boolean restorePrefData() {
+        userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE);
+        return userInfo.getBoolean("hasData", false);
     }
 }
