@@ -23,52 +23,42 @@
 
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="90dp"
+        android:id="@+id/uvTextView"
+        android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="54dp"
         android:gravity="center"
         android:text="UV Index: "
+        style="@style/TextBoxBackground"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="90dp"
+        android:id="@+id/altitudeTextView"
+        style="@style/TextBoxBackground"
+        android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="124dp"
         android:gravity="center"
         android:text="Altitude: "
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="127dp"
-        android:layout_height="45dp"
-        android:text="Disconnect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.911" />
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/bleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="No devices connected"
-        app:layout_constraintBottom_toTopOf="@+id/stopButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/textViewName"
+        app:layout_constraintVertical_bias="0.841" />
 
     <Button
         android:id="@+id/scanButton"
@@ -83,7 +73,19 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="Disconnect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.908" />
+
+    <Button
+        android:id="@+id/applyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apply Suncsreen"
@@ -106,7 +108,7 @@
         android:minHeight="30dip"
         android:progress="100"
         android:scaleY="2.5"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/applyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -115,7 +117,7 @@
         style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="44dp"
         android:gravity="center"
         android:text="Estimated Time Left: "
         android:textSize="18sp"
@@ -133,6 +135,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.378" />
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="176dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewName"
+        app:layout_constraintVertical_bias="0.891" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
