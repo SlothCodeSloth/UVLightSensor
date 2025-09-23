@@ -3,6 +3,10 @@ package com.example.bletest3;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -32,39 +36,26 @@ public class MainActivity2 extends AppCompatActivity implements ProfileFragment.
             return insets;
         });
 
-        chipNavigationBar = findViewById(R.id.bottom_nav_menu);
         viewPager = findViewById(R.id.view_pager);
 
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
-        pagerAdapter.addFragment(new HomeFragment());
-        pagerAdapter.addFragment(new ProfileFragment());
-        viewPager.setAdapter(pagerAdapter);
-        chipNavigationBar.setItemSelected(R.id.home, true);
-        bottomMenu();
-
-        int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        boolean isNightMode = currentMode == Configuration.UI_MODE_NIGHT_YES;
-
-        if (restorePrefData()) {
-            name = userInfo.getString("name", "");
-            spf = userInfo.getInt("spf", 0);
-            skinTypeVal = userInfo.getInt("skinType", 0);
-            pagerAdapter.addFragment(new HomeFragment(name, spf, skinTypeVal));
-            pagerAdapter.addFragment(new ProfileFragment(name, spf, skinTypeVal));
-        }
-        else {
+        if (!restorePrefData()) {
             pagerAdapter.addFragment(new HomeFragment());
             pagerAdapter.addFragment(new ProfileFragment());
         }
-
-        // Set background color for each menu item based on mode
-        if (isNightMode) {
-            // Night mode colors
-
-        } else {
-            // Light mode colors
-
+        else {
+            name = userInfo.getString("name", "");
+            spf = userInfo.getInt("spf", 0);
+            skinTypeVal = userInfo.getInt("skinType", 0);
         }
+        if (restorePrefData()) {
+            pagerAdapter.addFragment(new HomeFragment(name, spf, skinTypeVal));
+            pagerAdapter.addFragment(new ProfileFragment(name, spf, skinTypeVal));
+        }
+        chipNavigationBar = findViewById(R.id.bottom_nav_menu);
+        viewPager.setAdapter(pagerAdapter);
+        chipNavigationBar.setItemSelected(R.id.home, true);
+        bottomMenu();
 
         // Add a listener to update the selected item in ChipNavigationBar when swiping
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -102,10 +93,10 @@ public class MainActivity2 extends AppCompatActivity implements ProfileFragment.
     public void onDataPassedHome(String newName, int newspf, int newSkinType) {
         // Receive data from the ProfileFragment.
         HomeFragment homeFragment = (HomeFragment) pagerAdapter.getFragment(0);
-        homeFragment.updateData(name, newspf, newSkinType);
         name = newName;
         spf = newspf;
         skinTypeVal = newSkinType;
+        homeFragment.updateData(name, newspf, newSkinType);
         savePrefsData();
     }
 
@@ -116,6 +107,7 @@ public class MainActivity2 extends AppCompatActivity implements ProfileFragment.
         editor.putString("name", name);
         editor.putInt("spf", spf);
         editor.putInt("skinType", skinTypeVal);
+        editor.apply();
     }
 
     private boolean restorePrefData() {

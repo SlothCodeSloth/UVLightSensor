@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -48,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        // If the Introduction has already been viewed, skip upon next launch.
         if (restorePrefData()) {
             Intent mainActivity = new Intent(getApplicationContext(), MainActivity2.class);
             startActivity(mainActivity);
             finish();
         }
-
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
@@ -61,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         if (insetsController != null) {
             insetsController.hide(WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
         }
-
-        //getSupportActionBar().hide();
 
         btnNxt = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
@@ -78,15 +75,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Prepares the Introductory Activity. Adds the Title, Description, and Image for each screen.
         List<ScreenItem> mList = new ArrayList<>();
-        /*
-        mList.add(new ScreenItem("Protect your body!", "UV Rays, which comprise\n much of the sunlight we need\n can harm our skin. ", R.drawable.imgstart_img1));
-        mList.add(new ScreenItem("Sunscreen is crucial!", "But most of society\n doesn't know that it needs\n reapplication.", R.drawable.imgstart_img2));
-        mList.add(new ScreenItem("Know When to Reapply!", "Connect your \"TempName\"\n to your phone to keep\n track of your sunscreen.", R.drawable.imgstart_img3));
-        */
-        mList.add(new ScreenItem("the invisible danger: UV rays!", "Without proper protection\n long term exposure to UV\n can harm our skin. ", R.drawable.sunwglases));
-        mList.add(new ScreenItem("your skin's best friend: sunscreen! ", "It protects your skin from\n sunburn, premature aging, and \n possible risk of skin cancer.", R.drawable.spf));
-        mList.add(new ScreenItem("But when do I reapply?", "Link your device to your \n phone for  sunscreen \n reapplication reminders!", R.drawable.hourglass));
+        mList.add(new ScreenItem("The Invisible Danger: UV rays!", "Without proper protection\n long term exposure to UV\n can harm our skin. ", R.drawable.sunwglases));
+        mList.add(new ScreenItem("Your Skin's Best Friend: Sunscreen! ", "It protects your skin from\n sunburn, premature aging, and \n possible risk of skin cancer.", R.drawable.spf));
+        mList.add(new ScreenItem("But When Do I reapply?", "Link your device to your \n phone for  sunscreen \n reapplication reminders!", R.drawable.hourglass));
 
         screenPager = findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this, mList);
@@ -96,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 (tab, position) -> {}
         ).attach();
 
+        // Handles the user pressing "next" rather than swiping to get to the next screen.
         btnNxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Updates the Tab Bullet Points to indicate what tab(screen) the user is in.
         tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            // If last tab, make it visible that it is the last screen.
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == mList.size() - 1) {
@@ -130,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Requests permissions when the button is pressed.
         btnGetPermissions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Upon granting permissions, allow the user to proceed to the MainActivity2 (Functional Parts)
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,12 +146,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Determines if the user has viewed the intro or not.
     private boolean restorePrefData() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
         boolean isIntroActivityOpenedBefore = pref.getBoolean("isIntroOpened", false);
         return isIntroActivityOpenedBefore;
     }
 
+    // Saves whether the user has viewed the intro or not.
     private void savePrefsData() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // If Loading the last screen, hide some UI elements and show the Get Permissions button.
     private void loadLastScreen() {
         btnNxt.setAnimation(btnLeaveRight);
         btnNxt.setVisibility(View.INVISIBLE);
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         btnGetPermissions.setAnimation(btnAnim);
     }
 
+    // Prompt the user for permissions.
     private void requestPermissions() {
         if (checkPermissions()) {
             showLast();
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Checks if the following permissions have been granted or not.
     private boolean checkPermissions() {
         return ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -195,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // If permissions are given, proceed to the last screen.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -208,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Show the last screen.
     private void showLast() {
         btnGetPermissions.setAnimation(btnLeaveBottom);
         btnGetPermissions.setVisibility(View.INVISIBLE);

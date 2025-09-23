@@ -21,10 +21,11 @@
         android:elevation="8dp"
         app:cnb_menuResource="@menu/bottom_nav_menu"
         app:cnb_orientationMode="horizontal"
-        app:cnb_radius="1dp"
+        app:cnb_radius="15dp"
         style="@style/BottomNavBarStyle"
-        app:cnb_textAppearance="@color/purple_200"
-        app:cnb_iconColor = "@color/purple_200"
-        app:cnb_textColor="@color/purple_200"/>
+        app:cnb_iconColor="?attr/colorOnPrimary"
+        app:cnb_textColor="?attr/colorOnPrimary"
+        app:cnb_backgroundColor="?attr/colorPrimary"
+        />
 
 </RelativeLayout>

@@ -6,13 +6,13 @@
         android:id="@+id/home"
         android:title="Home"
         android:icon="@drawable/baseline_home_24"
-        app:cnb_backgroundColor="@color/purple_200"/>
+        app:cnb_iconColor="?attr/colorPrimary"/>
 
 
     <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/icon_info_light"
-        app:cnb_backgroundColor="@color/purple_200"/>
+        app:cnb_iconColor="?attr/colorPrimary"/>
 
 </menu>
