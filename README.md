@@ -1,6 +1,6 @@
 # UV Light Sensor Android App
 
-A Bluetooth Low Energy (BLE) enabled Android application that connects to UV sensor hardware to provide real time UV index monitoring and intelligent sunscreen application timing for safe sun exposure.
+A Bluetooth Low Energy (BLE) enabled Android application that connects to [UV sensor hardware](https://github.com/SlothCodeSloth/LTR390_BLESensor) to provide real time UV index monitoring and intelligent sunscreen application timing for safe sun exposure.
 
 ## 🎯 Overview
 
