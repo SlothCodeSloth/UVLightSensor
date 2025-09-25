@@ -109,6 +109,9 @@ public class HomeFragment extends Fragment {
     private CountDownTimer countDownTimer;
     private int spfVal, skinTypeVal;
     private boolean savedData = false;
+    private boolean testingMode = false;
+    private double currentAltitude = 42.0;
+    private LocationCallback locationCallback;
 
     //  Updates the ProgressBar when the application is minimized.
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -181,8 +184,8 @@ public class HomeFragment extends Fragment {
         // If there is any saved data, update the necessary UI elements to present it to the viewer.
         if (savedData) {
             nameTextView.setText(name);
-            applyButton.setVisibility(VISIBLE);
-            applyButton.setAnimation(btnAnim);
+            // applyButton.setVisibility(VISIBLE);
+            // applyButton.setAnimation(btnAnim);
         }
 
         /*
@@ -197,28 +200,75 @@ public class HomeFragment extends Fragment {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                altitudeTextView.setText("Altitude: 46m");
                 // Check if Testing
                 if (name.equals("Welcome Testing!")) {
-                    String testString = "Connected to: UVSensor";
+                    // When testing, simulate the scanning for a UV Sensor
+                    String testString = "Scanning for devices...`";
                     bleTextView.setText(testString);
+                    scanButton.setEnabled(false);
 
-                    Toast.makeText(requireContext(), "Found UV Sensor", Toast.LENGTH_SHORT).show();
+                    Handler scanHandler = new Handler(Looper.getMainLooper());
+                    scanHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Simulate the connection being established.
+                            String testString = "Connected to: UVSensor";
+                            bleTextView.setText(testString);
+                            altitudeTextView.setText("Altitude: 46m");
 
-                    // Hides the Scan Button, as the application is now testing responses to the sensor
-                    // Allows for use of the Stop (Disconnect) Button.
-                    scanButton.setVisibility(INVISIBLE);
-                    stopButton.setVisibility(VISIBLE);
-                    scanButton.setAnimation(btnLeaveBottom);
-                    stopButton.setAnimation(btnAnim);
+                            Toast.makeText(requireContext(), "Found UV Sensor", Toast.LENGTH_SHORT).show();
+
+                            // Show the Apply Button if there is any saved data during testing mode.
+                            if (savedData) {
+                                applyButton.setVisibility(VISIBLE);
+                                applyButton.setAnimation(btnAnim);
+                            }
+
+                            // Hides the Scan Button, as the application is now testing responses to the sensor
+                            // Allows for use of the Stop (Disconnect) Button.
+                            scanButton.setVisibility(INVISIBLE);
+                            stopButton.setVisibility(VISIBLE);
+                            scanButton.setAnimation(btnLeaveBottom);
+                            stopButton.setAnimation(btnAnim);
+                        }
+                    }, 2000); // 3 Second Delay
                 }
-
                 else {
                     // Check if permissions have been granted.
                     checkPermissions();
                 }
 
+                    //testString = "Connected to: UVSensor";
+                    //bleTextView.setText(testString);
+                    //altitudeTextView.setText("Altitude: 46m");
 
+                    //Toast.makeText(requireContext(), "Found UV Sensor", Toast.LENGTH_SHORT).show();
+
+                    // Show the Apply Button if there is any saved data during testing mode.
+                        /*
+                    if (savedData) {
+                        applyButton.setVisibility(VISIBLE);
+                        applyButton.setAnimation(btnAnim);
+                    }
+                         */
+
+                    // Hides the Scan Button, as the application is now testing responses to the sensor
+                    // Allows for use of the Stop (Disconnect) Button.
+                        /*
+                    scanButton.setVisibility(INVISIBLE);
+                    stopButton.setVisibility(VISIBLE);
+                    scanButton.setAnimation(btnLeaveBottom);
+                    stopButton.setAnimation(btnAnim);
+
+                         */
+                // }
+
+                /*
+                else {
+                    // Check if permissions have been granted.
+                    checkPermissions();
+                }
+                */
             }
         });
 
@@ -235,6 +285,9 @@ public class HomeFragment extends Fragment {
                 scanButton.setVisibility(VISIBLE);
                 stopButton.startAnimation(btnLeaveBottom);
                 scanButton.startAnimation(btnAnim);
+
+                // Hides/Disables the apply button.
+                applyButton.setVisibility(INVISIBLE);
             }
         });
 
@@ -306,8 +359,8 @@ public class HomeFragment extends Fragment {
         //textboxString = altitudeTextView.getText().toString();
         //numericSubstring = textboxString.substring("Altitude: ".length()); // Extract substring containing the numeric value
         //double altitude = Double.parseDouble(numericSubstring); // Parse the numeric substring to double
-        altitude = 42.0;
-        totalTime = formula((int) skinTypeVal, spfVal, uvIndex, altitude);
+        // altitude = 42.0;
+        totalTime = formula((int) skinTypeVal, spfVal, uvIndex, currentAltitude);
         currentTime = totalTime;
         progressBar.setMax((int) currentTime * 100);
         timeLeftView.setVisibility(VISIBLE);
@@ -323,10 +376,11 @@ public class HomeFragment extends Fragment {
                 String textboxString = uvTextView.getText().toString();
                 String numericSubstring = textboxString.substring("UV Index: ".length()); // Extract substring containing the numeric value
                 double uvIndex = Double.parseDouble(numericSubstring); // Parse the numeric substring to double
-                int skin = 2;
-                int spf = 30;
-                altitude = 19.0;
-                double x = formula(skin, spf, uvIndex, altitude);
+                // int skin = 2;
+                // int spf = 30;
+                //altitude = 19.0;
+
+                double x = formula(skinTypeVal, spfVal, uvIndex, currentAltitude);
                 x = totalTime / x;
                 currentTime -= 0.1 * x;
                 updateTimerText();
@@ -410,6 +464,11 @@ public class HomeFragment extends Fragment {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+
+        if (locationCallback != null) {
+            LocationServices.getFusedLocationProviderClient(requireContext())
+                    .removeLocationUpdates(locationCallback);
+        }
     }
 
     // Formula that calculates the estimated safe sun exposure time. It is presented in
@@ -419,6 +478,7 @@ public class HomeFragment extends Fragment {
         double altitudeFactor;
         double spfD = (double) spfInt;
         double formula_time_raw;
+
         // Applies a skinFactor depending on the selected skinType
         switch (skinType) {
             case 1:
@@ -440,11 +500,42 @@ public class HomeFragment extends Fragment {
                 skinFactor = 0.8;
                 break;
         }
+
         // Applies an altitude factor. Roughly 1.10%
         altitudeFactor = 1 + ((altitude / 1000) * 0.1);
 
+        // Calculate base formula in minutes
         formula_time_raw = ((spfD * skinFactor) / (uv * altitudeFactor)) * 60;
-        return formula_time_raw;
+
+        if (name.equals("Welcome Testing!")) {
+            // Testing mode: return in seconds (for faster testing)
+            // Apply the same logic but convert to seconds
+            if ((formula_time_raw < 120) && (spfD >= 15)) {
+                // 2 hours becomes 2 minutes in testing mode
+                return 120; // 2 minutes in seconds
+            } else if (formula_time_raw >= 360) {
+                // 6 hours becomes 6 minutes in testing mode
+                return 360; // 6 minutes in seconds
+            } else {
+                // Convert the result from minutes to seconds for testing
+                return formula_time_raw;
+            }
+        } else {
+            // Normal mode: return in seconds (as your app expects)
+            if ((formula_time_raw < 120) && (spfD >= 15)) {
+                // Less than 2 hours with SPF >= 15: set to 2 hours
+                return 120 * 60; // 2 hours in seconds
+            } else if (formula_time_raw >= 360) {
+                // More than 6 hours: cap at 6 hours
+                return 360 * 60; // 6 hours in seconds
+            } else {
+                // Return calculated time in seconds
+                return formula_time_raw * 60;
+            }
+        }
+
+        // return formula_time_raw;
+
         //if the formula is less than 2 and spf spf > 15 then auto to make formula_time_raw 2 hours
         /*
         if ((formula_time_raw < 120) && (spfD >= 15) ) {
@@ -456,7 +547,6 @@ public class HomeFragment extends Fragment {
         } else {
             return (spfD * skinFactor) / (uv * altitudeFactor) * 60;
         }
-
          */
     }
 
@@ -640,6 +730,11 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(requireContext(), "Found UV Sensor", Toast.LENGTH_SHORT).show();
                 bluetoothGatt = device.connectGatt(requireContext(), false, bluetoothGattCallback);
 
+                if (savedData) {
+                    applyButton.setVisibility(VISIBLE);
+                    applyButton.setAnimation(btnAnim);
+                }
+
                 // Hides the Scan Button, as the application has now connected to a BLE Device.
                 // Allows for use of the Stop (Disconnect) Button.
                 scanButton.setVisibility(INVISIBLE);
@@ -693,12 +788,13 @@ public class HomeFragment extends Fragment {
                     requireActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // Hides the Stop Function, Allows for Scanning again.
+                            // Hides the Stop Function, Allows for Scanning again. Also Hides the Apply Button.
                             bleTextView.setText("Device disconnected");
                             stopButton.setVisibility(INVISIBLE);
                             scanButton.setVisibility(VISIBLE);
                             stopButton.startAnimation(btnLeaveBottom);
                             scanButton.startAnimation(btnAnim);
+                            applyButton.setVisibility(INVISIBLE);
                         }
                     });
                 }
@@ -895,6 +991,15 @@ public class HomeFragment extends Fragment {
 
     // Retrieve the Altitude from the user's location.
     private void getAltitude() {
+        // Set up Testing Override for Altitude
+        if (name.equals("Welcome Testing!")) {
+            testingMode = true;
+            currentAltitude = 46.0;
+            String alt = "Altitude: " + (int)currentAltitude + "m";
+            altitudeTextView.setText(alt);
+            return;
+        }
+
         LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -903,13 +1008,46 @@ public class HomeFragment extends Fragment {
             Toast.makeText(requireContext(), "Location permissions not granted", Toast.LENGTH_SHORT).show();
             String alt = "Altitude: 1m";// Return default value or handle the lack of permissions
             altitudeTextView.setText(alt);
-        } else {
+            return;
+        }
+        else {
             LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setInterval(10000); // Set the interval for location updates (in milliseconds)
-            locationRequest.setFastestInterval(5000); // Set the fastest interval for location updates (in milliseconds)
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); // Set the priority for location accuracy
+            locationRequest.setInterval(300000); // Set the interval for location updates (in milliseconds) (5 minutes)
+            locationRequest.setFastestInterval(60000); // Set the fastest interval for location updates (in milliseconds) (1 minute)
+            locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY); // Set the priority for location accuracy
+
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    Location location = locationResult.getLastLocation();
+                    if (location != null && location.hasAltitude()) {
+                        currentAltitude = location.getAltitude();
+                        if (currentAltitude < 1) {
+                            currentAltitude = 1;
+                        }
+
+                        // Update UI on main thread
+                        requireActivity().runOnUiThread(() -> {
+                            String alt = "Altitude: " + (int)currentAltitude + "m";
+                            altitudeTextView.setText(alt);
+                        });
+
+                        Log.d("MyApp", "Altitude updated: " + currentAltitude);
+                    } else {
+                        // Use fallback if GPS doesn't provide altitude
+                        currentAltitude = 42.0;
+                        requireActivity().runOnUiThread(() -> {
+                            String alt = "Altitude: " + (int)currentAltitude + "m (estimated)";
+                            altitudeTextView.setText(alt);
+                        });
+                    }
+                }
+            };
+
 
             // Use the fused location provider client to request location updates
+            /*
             LocationServices.getFusedLocationProviderClient(requireContext())
                     .requestLocationUpdates(locationRequest, new LocationCallback() {
                         @Override
@@ -931,6 +1069,11 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }, Looper.getMainLooper());
+
+             */
+
+            LocationServices.getFusedLocationProviderClient(requireContext())
+                    .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
         }
     }
 
@@ -975,8 +1118,10 @@ public class HomeFragment extends Fragment {
 
     // Updates UI Elements to show saved data.
     public void updateData(String newName, int newspf, int newSkinType) {
-        applyButton.setVisibility(VISIBLE);
-        applyButton.setAnimation(btnAnim);
+        if (scanButton.getVisibility() == INVISIBLE) {
+            applyButton.setVisibility(VISIBLE);
+            applyButton.setAnimation(btnAnim);
+        }
         name = "Welcome " + newName + "!";
         nameTextView.setText(name);
         spfVal = newspf;
