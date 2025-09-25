@@ -195,12 +195,6 @@ This app provides estimates based on scientific formulas but should not replace 
  
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 🙏 Acknowledgments
 
 - UV exposure formula based on dermatological research
