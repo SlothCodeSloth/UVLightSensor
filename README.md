@@ -24,9 +24,22 @@ The UV Light Sensor app ensures sun safety by providing:
 - 🎨 **Theme Support**: Dark/light mode switching with smooth animations
 - 📈 **Data Visualization**: Interactive line charts showing UV index trends over time
 
+## Examples
+Below is the Profile page, showing the details the user can put in. On the left is the Light Mode view, and the right shows the Dark Mode. 
+<p align="center">
+   <img src="assets/LightTheme.png" width="200"/>
+   &nbsp;&nbsp;&nbsp;
+   <img src="assets/DarkTheme.png" width="200"/>
+</p>
+
+Along with that, a preview of the app in use is shown below. The timer adjusts accordingly, taking into account any changes in elevation and UV index.
+<p align="center">
+   <img src="assets/Example.gif" width="200"/>
+</p>
+
 ---
 
-## 🧬 Scientific Foundation
+## 🧬 Factors and Calculations
 
 ### Sun Exposure Formula
 The app uses a scientifically-based formula to calculate safe sun exposure time:
